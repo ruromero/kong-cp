@@ -2,7 +2,7 @@ kind: Secret
 apiVersion: v1
 metadata:
   name: example-secret
-  namespace: openshift-gitops
+  namespace: kong
   annotations:
     avp.kubernetes.io/path: "avp/data/test"
 type: Opaque

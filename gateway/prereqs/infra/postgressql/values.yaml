@@ -1,0 +1,6 @@
+postgresql:
+  enabled: true
+  auth:
+    username: kong
+    database: kong
+    password: kong123

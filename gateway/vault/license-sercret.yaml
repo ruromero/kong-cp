@@ -1,10 +1,10 @@
 kind: Secret
 apiVersion: v1
 metadata:
-  name: kong-enterprise-license
-  namespace: kong
+  name: example-secret
+  namespace: openshift-gitops
   annotations:
     avp.kubernetes.io/path: "avp/data/test"
 type: Opaque
 stringData:
-  license: <sample>
+  sample-secret: <sample>

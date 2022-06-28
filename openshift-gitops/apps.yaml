@@ -58,5 +58,22 @@ spec:
     automated: # automatically sync repo changes
       prune: true
       selfHeal: true
-
-
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: kong
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: gateway/controlplane
+    repoURL: https://github.com/mpaulgreen/kong-cp.git
+    targetRevision: structure
+  syncPolicy:
+    automated: # automatically sync repo changes
+      prune: true
+      selfHeal: true

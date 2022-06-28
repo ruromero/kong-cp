@@ -5,7 +5,7 @@ helm repo update
 helm -n vault install vault hashicorp/vault --set "global.openshift=true" --set "server.dev.enabled=true"
 ```
 
-## Vault setup
+## Vault setup  - TODO - Production Setup
 ```
 kubectl exec vault-0 -n vault -- vault auth enable kubernetes
 

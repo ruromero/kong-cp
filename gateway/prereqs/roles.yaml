@@ -43,3 +43,35 @@ subjects:
 - kind: ServiceAccount
   name: redhat-kong-gitops-argocd-application-controller
   namespace: openshift-gitops
+---
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: access-secrets
+  namespace: kong
+rules:
+  - verbs:
+      - get
+      - list
+      - watch
+      - update
+      - create
+    apiGroups:
+      - ''
+    resources:
+      - secrets
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kong-to-secrets
+  namespace: kong
+subjects:
+  - kind: ServiceAccount
+    name: kong
+    namespace: kong
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: access-secrets

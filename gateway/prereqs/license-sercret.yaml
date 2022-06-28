@@ -1,0 +1,10 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  name: example-secret
+  namespace: openshift-gitops
+  annotations:
+    avp.kubernetes.io/path: "avp/data/test"
+type: Opaque
+stringData:
+  sample-secret: <sample>

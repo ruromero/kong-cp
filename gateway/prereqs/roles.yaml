@@ -44,7 +44,6 @@ subjects:
   name: redhat-kong-gitops-argocd-application-controller
   namespace: openshift-gitops
 ---
----
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:

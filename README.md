@@ -23,3 +23,12 @@ oc get routes -n openshift-gitops redhat-kong-gitops-server --template='{{ .spec
 ```bash
 oc get secret -n openshift-gitops redhat-kong-gitops-cluster -ojsonpath='{.data.admin\.password}' | base64 -d
 ```
+
+# Install the hasicorp vault
+The deployment of hashicorp vault is as such out side the scope gitops deployment of kong gateway
+Refer [Vault setup](/openshift-gitops/vault.md) for basic dev setup of vault
+
+# Create the apps
+```bash
+oc apply -f openshift-gitops/apps.yaml
+```

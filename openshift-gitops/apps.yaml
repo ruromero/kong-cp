@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prereqs
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: kong
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    directory:
+      recurse: true
+    path: gateway/prereqs
+    repoURL: https://github.com/mpaulgreen/kong-cp.git
+    targetRevision: structure # branch
+  syncPolicy:
+    automated: # automatically sync repo changes
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-secrets
+  namespace: openshift-gitops
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/mpaulgreen/kong-cp.git'
+    path: gateway/vault
+    targetRevision: structure
+    plugin:
+      name: argocd-vault-plugin
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kong
+  syncPolicy:
+    automated: # automatically sync repo changes
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgresql
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: kong
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: gateway/postgresql
+    repoURL: https://github.com/mpaulgreen/kong-cp.git
+    targetRevision: structure
+  syncPolicy:
+    automated: # automatically sync repo changes
+      prune: true
+      selfHeal: true
+
+

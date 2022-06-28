@@ -19,7 +19,7 @@ kong:
     cluster_cert_key: /etc/secrets/kong-cluster-cert/tls.key
     pg_user: kong
     pg_password: kong123
-    pg_host: postgressql-postgresql
+    pg_host: postgresql
   cluster:
     enabled: true
     type: LoadBalancer

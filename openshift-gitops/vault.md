@@ -2,7 +2,7 @@
 ```
 helm repo add hashicorp https://helm.releases.hashicorp.com
 helm repo update
-helm -n vault install vault hashicorp/vault --set "global.openshift=true" --set "server.dev.enabled=true"
+helm -n vault install vault hashicorp/vault --set "global.openshift=true" --set "server.dev.enabled=true" --create-namespace
 ```
 
 ## Vault setup  - TODO - Production Setup

@@ -37,6 +37,8 @@ oc apply -f openshift-gitops/cp/
     - [] Data Plane
     - [] kustomize in openshift-gitops/
     - [] Monitoring in data plane
+    - [] Bookinfo app
     - [] app of apps
     - [] helm chart of app of apps
     - [] Enterprise Vault
+

@@ -29,7 +29,7 @@ Refer [Vault setup](/openshift-gitops/vault.md) for basic dev setup of vault
 
 ### Create the apps
 ```bash
-oc apply -f openshift-gitops/cp/
+oc apply -f openshift-gitops/overlays/cp/
 ```
 
 - TODO

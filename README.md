@@ -33,9 +33,10 @@ oc apply -f openshift-gitops/cp/
 ```
 
 - TODO
-    - [] Enterprise Vault
     - [] PostInstall for CP
     - [] Data Plane
+    - [] kustomize in openshift-gitops/
     - [] Monitoring in data plane
     - [] app of apps
     - [] helm chart of app of apps
+    - [] Enterprise Vault

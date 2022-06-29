@@ -10,7 +10,7 @@ metadata:
 spec:
   destination:
     namespace: kong
-    server: https://api.kongdp.kni.syseng.devcluster.openshift.com:6443 # kustomization param
+    server: 'https://api.kongdp.kni.syseng.devcluster.openshift.com:6443' # kustomization param
   project: default
   source:
     directory:

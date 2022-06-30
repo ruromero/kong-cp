@@ -80,15 +80,8 @@ roleRef:
   kind: Role
   name: access-secrets
 ---
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
 metadata:
-  name: kong-to-scc-anyuid
-subjects:
-  - kind: ServiceAccount
-    name: kong
-    namespace: kong
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  creationTimestamp: null
   name: system:openshift:scc:anyuid
+rules: null

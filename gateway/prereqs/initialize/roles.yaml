@@ -56,13 +56,17 @@ metadata:
   name: access-secrets
   namespace: kong
 rules:
+  # needed to read the cluster.crt and cluster.key
+  - apiGroups:
+    - security.openshift.io
+    resourceNames:
+    - anyuid
+    resources:
+    - securitycontextconstraints
+    verbs:
+    - use
   - verbs:
-      - get
-      - list
-      - watch
-      - update
       - create
-      - delete
     apiGroups:
       - ''
     resources:

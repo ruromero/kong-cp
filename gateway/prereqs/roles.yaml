@@ -32,6 +32,8 @@ subjects:
 - kind: ServiceAccount
   name: redhat-kong-gitops-argocd-application-controller
   namespace: openshift-gitops
+
+# Added following to overcome the permission issues. Need to revisit it in future.
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -77,3 +79,34 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: access-secrets
+
+# The following have ot be tested
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: scc-anyuid
+  namespace: kong
+rules:
+  - apiGroups:
+    - security.openshift.io
+    resourceNames:
+    - anyuid
+    resources:
+    - securitycontextconstraints
+    verbs:
+    - use
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kong-to-scc-anyuid
+  namespace: kong
+subjects:
+  - kind: ServiceAccount
+    name: kong
+    namespace: kong
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: scc-anyuid

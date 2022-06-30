@@ -17,7 +17,7 @@ spec:
   source:
     path: gateway/controlplane
     repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: structure
+    targetRevision: cw-structure
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true

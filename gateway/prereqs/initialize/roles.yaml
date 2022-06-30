@@ -79,34 +79,16 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: access-secrets
-
-# The following have ot be tested
 ---
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: scc-anyuid
-  namespace: kong
-rules:
-  - apiGroups:
-    - security.openshift.io
-    resourceNames:
-    - anyuid
-    resources:
-    - securitycontextconstraints
-    verbs:
-    - use
----
-kind: RoleBinding
+kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: kong-to-scc-anyuid
-  namespace: kong
 subjects:
   - kind: ServiceAccount
     name: kong
     namespace: kong
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: scc-anyuid
+  kind: ClusterRole
+  name: system:openshift:scc:anyuid

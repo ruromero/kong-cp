@@ -1,3 +1,5 @@
+# All roles needs to bve reviewed and narrowed down
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -79,9 +81,47 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: access-secrets
+
+# Applying Casey's roles
 ---
-kind: ClusterRole
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  creationTimestamp: null
-  name: system:openshift:scc:anyuid
-rules: null
+  name: postgres-perms
+  namespace: kong
+rules:
+  - apiGroups:
+    - ""
+    resources:
+    - secrets
+    - services
+    verbs:
+    - patch
+  - apiGroups:
+    - apps
+    resources:
+    - statefulsets
+    verbs:
+    - patch
+  - apiGroups:
+    - security.openshift.io
+    resourceNames:
+    - anyuid
+    resources:
+    - securitycontextconstraints
+    verbs:
+    - use
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ayuid-to-postgres
+  namespace: kong
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: kong
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: postgres-perms

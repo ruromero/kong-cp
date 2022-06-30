@@ -65,6 +65,7 @@ rules:
     - securitycontextconstraints
     verbs:
     - use
+  # needed to create the secret
   - verbs:
       - create
     apiGroups:

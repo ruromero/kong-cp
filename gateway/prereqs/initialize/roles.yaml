@@ -5,6 +5,13 @@ kind: ClusterRole
 metadata:
   name: gitops-kong
 rules:
+# must patch routes for postinstall
+- apiGroups:
+  - route.openshift.io
+  resources:
+  - routes
+  verbs:
+  - patch
 - apiGroups:
   - networking.k8s.io
   resources:

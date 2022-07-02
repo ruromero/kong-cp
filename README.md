@@ -60,6 +60,22 @@ metadata:
   uid: 309e0540-e8e9-470a-b795-b00816206273
 ```
 
+- check logs from the `patch-deploy` job
+
+```bash
+oc logs -n kong -l job-name=patch-deploy
+```
+
+output
+```
+redhat-kong-gitops-server-openshift-gitops.apps.cwylie-us-west-1b.kni.syseng.devcluster.openshift.com
+Be4OqiXClFN7paoWDIAPZj1tUnfsK06J
+'admin:login' logged in successfully
+Context 'redhat-kong-gitops-server-openshift-gitops.apps.cwylie-us-west-1b.kni.syseng.devcluster.openshift.com' updated
+time="2022-07-02T12:47:20Z" level=info msg="Resource 'kong-kong' patched"
+```
+
+
 - TODO
     - [] PostInstall for CP
       - [x] routes

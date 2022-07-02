@@ -5,6 +5,27 @@ kind: ClusterRole
 metadata:
   name: gitops-kong
 rules:
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  - deployments
+  verbs:
+  - create
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  - secrets
+  - services
+  verbs:
+  - create
 # must patch routes for postinstall
 - apiGroups:
   - route.openshift.io

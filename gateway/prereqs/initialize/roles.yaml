@@ -12,12 +12,14 @@ rules:
   - deployments
   verbs:
   - create
+  - patch
 - apiGroups:
   - batch
   resources:
   - jobs
   verbs:
   - create
+  - patch
 - apiGroups:
   - ""
   resources:
@@ -26,6 +28,7 @@ rules:
   - services
   verbs:
   - create
+  - patch
 # must patch routes for postinstall
 - apiGroups:
   - route.openshift.io

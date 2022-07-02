@@ -36,6 +36,10 @@ oc apply -f openshift-gitops/overlays/cp/
 
 ```bash
 http `oc get route -n kong kong-kong-admin --template='{{.spec.host}}'` | jq .version
+```
+
+output
+```bash
 "2.8.1.1-enterprise-edition"
 ```
 
@@ -46,7 +50,7 @@ oc get cm cluster-urls -n kong -oyaml
 ```
 
 output
-```
+```bash
 apiVersion: v1
 data:
   CLUSTER_TELEMETRY_URL: aada71fce488d417b9db340ce87c9b4b-763449203.us-west-1.elb.amazonaws.com
@@ -67,7 +71,7 @@ oc logs -n kong -l job-name=patch-deploy
 ```
 
 output
-```
+```bash
 redhat-kong-gitops-server-openshift-gitops.apps.cwylie-us-west-1b.kni.syseng.devcluster.openshift.com
 Be4OqiXClFN7paoWDIAPZj1tUnfsK06J
 'admin:login' logged in successfully

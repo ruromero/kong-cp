@@ -1,46 +1,46 @@
 # All roles needs to bve reviewed and narrowed down
 
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: gitops-kong
-rules:
-# must patch routes for postinstall
-- apiGroups:
-  - route.openshift.io
-  resources:
-  - routes
-  verbs:
-  - patch
-- apiGroups:
-  - networking.k8s.io
-  resources:
-  - ingressclasses
-  verbs:
-  - create
-  - patch
-  - delete
-- apiGroups:
-  - apiextensions.k8s.io
-  resources:
-  - customresourcedefinitions
-  verbs:
-  - patch
-  - create
-  - delete
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: gitops-kong-binding
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: gitops-kong
-subjects:
-- kind: ServiceAccount
-  name: redhat-kong-gitops-argocd-application-controller
-  namespace: openshift-gitops
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: ClusterRole
+# metadata:
+#   name: gitops-kong
+# rules:
+# # must patch routes for postinstall
+# - apiGroups:
+#   - route.openshift.io
+#   resources:
+#   - routes
+#   verbs:
+#   - patch
+# - apiGroups:
+#   - networking.k8s.io
+#   resources:
+#   - ingressclasses
+#   verbs:
+#   - create
+#   - patch
+#   - delete
+# - apiGroups:
+#   - apiextensions.k8s.io
+#   resources:
+#   - customresourcedefinitions
+#   verbs:
+#   - patch
+#   - create
+#   - delete
+# ---
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: ClusterRoleBinding
+# metadata:
+#   name: gitops-kong-binding
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: ClusterRole
+#   name: gitops-kong
+# subjects:
+# - kind: ServiceAccount
+#   name: redhat-kong-gitops-argocd-application-controller
+#   namespace: openshift-gitops
 
 # Added following to overcome the permission issues. Need to revisit it in future.
 ---

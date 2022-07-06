@@ -38,7 +38,6 @@ oc apply -f openshift-gitops/overlays/cp/
     - [] kustomize in openshift-gitops/
     - [] Monitoring in data plane
     - [] Bookinfo app
-    - [] app of apps
-    - [] helm chart of app of apps
+    - [] app of apps (helm chart)
     - [] Enterprise Vault
 

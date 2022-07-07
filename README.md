@@ -98,5 +98,7 @@ time="2022-07-02T12:47:20Z" level=info msg="Resource 'kong-kong' patched"
 
 Quickly remove finalizers from ArgoCD `Applications`
 ```
-kubectl get application -n openshift-gitops --no-headers | awk '{ print $1 }' | xargs kubectl patch application --type json -p '[ { "op": "remove", "path": "/metadata/finalizers" } ]'  -n openshift-gitops; k delete application --all -n openshift-gitops 
+kubectl get application -n openshift-gitops --no-headers | awk '{ print $1 }' | xargs kubectl patch application --type json -p '[ { "op": "remove", "path": "/metadata/finalizers" } ]'  -n openshift-gitops; k delete application --all -n openshift-gitops;
+
+k delete routes,cm,secret,deploy,svc,sa,po --all -n kong --force; k delete ns kong
 ```

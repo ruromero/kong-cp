@@ -1,11 +1,11 @@
-## Vault Install
+## Vault Install 
 ```
 helm repo add hashicorp https://helm.releases.hashicorp.com
 helm repo update
 helm -n vault install vault hashicorp/vault --set "global.openshift=true" --set "server.dev.enabled=true" --create-namespace
 ```
 
-## Vault setup  - TODO - Production Setup
+## Vault setup  - Development mode
 ```
 kubectl exec vault-0 -n vault -- vault auth enable kubernetes
 

@@ -5,3 +5,5 @@ license.json
 cluster.*
 cp-values.yaml
 Screen*
+vault/cluster-keys.json
+.idea/

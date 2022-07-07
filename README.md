@@ -34,6 +34,7 @@ oc apply -f openshift-gitops/overlays/cp/
 
 ### Create the bookinfo app
 ```bash
+oc create ns bookinfo # add this as pre-req in data plane
 oc apply -f openshift-gitops/bookinfo/app.yaml # Do Initialize the roles first
 oc -n bookinfo port-forward svc/productpage 9080:9080
 ```

@@ -32,22 +32,24 @@ Refer [Vault setup](/openshift-gitops/vault.md) for basic dev setup of vault
 oc apply -f openshift-gitops/overlays/cp/
 ```
 
+### Create the bookinfo app
+```bash
+oc create ns bookinfo # add this as pre-req in data plane
+oc apply -f openshift-gitops/bookinfo/app.yaml # Do Initialize the roles first
+oc -n bookinfo port-forward svc/productpage 9080:9080
+```
 
 - TODO
-    - [x] PostInstall for CP
-      - [x] routes
-      - [x] CLUSTER_URL & CLUSTER_TELEMETRY_URL ConfigMap
-      - [x] Patch Deploy KONG_ADMIN_API_URI
-    - [] Data Plane
-      - [ ] secret
-      - [ ] helm chart
-      - [ ] routes
-    - [] kustomize in openshift-gitops/
-    - [] Monitoring in data plane
-    - [] Bookinfo app
-    - [] app of apps
-    - [] helm chart of app of apps
-    - [] Enterprise Vault
+    - Iteration 1
+        - [] PostInstall for CP
+        - [] Data Plane
+        - [] kustomize in openshift-gitops/
+        - [] Monitoring in data plane
+        - [X] Bookinfo app
+        - [] app of apps (helm chart)
+        - [] Enterprise Vault - Retrieving secrets from the vault
+    - Iteration 2
+        - [] Automation for Setup, initialize and unsealing of vault.
 
 
 

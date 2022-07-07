@@ -33,14 +33,14 @@ oc apply -f openshift-gitops/overlays/cp/
 ```
 
 - TODO
-    - [] PostInstall for CP
-    - [] Data Plane
-    - [] kustomize in openshift-gitops/
-    - [] Monitoring in data plane
-    - [] Bookinfo app
-    - [] app of apps (helm chart)
-    - [] Enterprise Vault
-
-- Iteration 2
-    [] Setup, initialize and unsealing of vault.
+    - Iteration 1
+        - [] PostInstall for CP
+        - [] Data Plane
+        - [] kustomize in openshift-gitops/
+        - [] Monitoring in data plane
+        - [] Bookinfo app
+        - [] app of apps (helm chart)
+        - [] Enterprise Vault - Retrieving secrets from the vault
+    - Iteration 2
+        [] Automation for Setup, initialize and unsealing of vault.
 

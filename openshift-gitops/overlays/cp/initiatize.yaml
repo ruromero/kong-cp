@@ -17,7 +17,7 @@ spec:
       recurse: true
     path: gateway/prereqs/initialize
     repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: cw-structure # branch
+    targetRevision: main # branch
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true

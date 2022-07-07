@@ -7,6 +7,8 @@ metadata:
 apiVersion: batch/v1
 kind: Job
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
   namespace: kong
   name: cm-generator
 spec:

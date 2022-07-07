@@ -40,6 +40,7 @@ data:
     #!/bin/bash
     set -eu
 
+    sleep 30
     # Get CLUSTER_URL
     CLUSTER_URL=$(oc get svc kong-kong-cluster -ojsonpath='{.status.loadBalancer.ingress[].ip}' -n kong)
 

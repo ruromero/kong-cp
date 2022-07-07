@@ -52,11 +52,11 @@ data:
     echo $CLUSTER_URL
 
     # Get CLUSTER_TELEMETRY_URL
-    CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojsonpath='{.status.loadBalancer.ingress[].hostname}' -n kong)
+    CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojsonpath='{.status.loadBalancer.ingress[].ip}' -n kong)
 
-    if [ -z "$CLUSTER_URL" ];
+    if [ -z "$CLUSTER_TELEMETRY_URL" ];
     then 
-      CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojsonpath='{.status.loadBalancer.ingress[].ip}' -n kong)
+      CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojsonpath='{.status.loadBalancer.ingress[].hostname}' -n kong)
     else 
       echo "CLUSTER_TELEMETRY_URL Not NULL";
     fi

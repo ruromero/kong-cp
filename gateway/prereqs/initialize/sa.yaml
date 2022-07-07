@@ -3,3 +3,9 @@ kind: ServiceAccount
 metadata:
   name: kong
   namespace: kong
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kong
+  namespace: kong-dp

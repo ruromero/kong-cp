@@ -118,7 +118,43 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: access-secrets
-
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: access-secrets
+  namespace: kong-dp
+rules:
+  # needed to read the cluster.crt and cluster.key
+  - apiGroups:
+    - security.openshift.io
+    resourceNames:
+    - anyuid
+    resources:
+    - securitycontextconstraints
+    verbs:
+    - use
+  # needed to create the secret
+  - verbs:
+      - create
+    apiGroups:
+      - ''
+    resources:
+      - secrets
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kong-to-secrets
+  namespace: kong-dp
+subjects:
+  - kind: ServiceAccount
+    name: kong
+    namespace: kong-dp
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: access-secrets
 # Applying Casey's roles
 ---
 kind: Role

@@ -8,3 +8,14 @@ metadata:
 type: Opaque
 stringData:
   license: <sample>
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name:  kong-enterprise-license 
+  namespace: kong-dp
+  annotations:
+    avp.kubernetes.io/path: "avp/data/test"
+type: Opaque
+stringData:
+  license: <sample>

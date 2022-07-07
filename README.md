@@ -81,11 +81,14 @@ time="2022-07-02T12:47:20Z" level=info msg="Resource 'kong-kong' patched"
 
 
 - TODO
-    - [] PostInstall for CP
+    - [x] PostInstall for CP
       - [x] routes
       - [x] CLUSTER_URL & CLUSTER_TELEMETRY_URL ConfigMap
       - [x] Patch Deploy KONG_ADMIN_API_URI
     - [] Data Plane
+      - [ ] secret
+      - [ ] helm chart
+      - [ ] routes
     - [] kustomize in openshift-gitops/
     - [] Monitoring in data plane
     - [] Bookinfo app

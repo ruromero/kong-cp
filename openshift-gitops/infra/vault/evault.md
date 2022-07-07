@@ -1,4 +1,4 @@
-- The vault may be borrowed from multi cloud validated pattern project (On-Premise) 
+- The vault app can be borrowed from multi cloud validated pattern project (On-Premise) 
 - Set up the HA vault with consul as backend (consul may be on hosted on a cloud provider) (Cloud Provider)
 - The following set up is for demonstration only
 ```

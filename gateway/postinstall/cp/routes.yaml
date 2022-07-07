@@ -7,7 +7,7 @@ spec:
   port:
     targetPort: kong-admin
   to:
-    kind: ""
+    kind: Service
     name: kong-kong-admin
     weight: null
 ---
@@ -20,7 +20,7 @@ spec:
   port:
     targetPort: kong-manager
   to:
-    kind: ""
+    kind: Service
     name: kong-kong-manager
     weight: null
 ---
@@ -35,7 +35,7 @@ spec:
   tls:
     termination: passthrough
   to:
-    kind: ""
+    kind: Service
     name: kong-kong-manager
     weight: null
 ---
@@ -50,6 +50,6 @@ spec:
   tls:
     termination: passthrough
   to:
-    kind: ""
+    kind: Service
     name: kong-kong-admin
     weight: null

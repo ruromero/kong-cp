@@ -41,3 +41,6 @@ oc apply -f openshift-gitops/overlays/cp/
     - [] app of apps (helm chart)
     - [] Enterprise Vault
 
+- Iteration 2
+    [] Setup, initialize and unsealing of vault.
+

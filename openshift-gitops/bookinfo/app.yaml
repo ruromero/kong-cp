@@ -14,3 +14,8 @@ spec:
     path: bookinfo
     repoURL: https://github.com/mpaulgreen/kong-cp.git
     targetRevision: structure
+  syncPolicy:
+    automated: # automatically sync repo changes
+      prune: true
+      selfHeal: true
+      allowEmpty: true    

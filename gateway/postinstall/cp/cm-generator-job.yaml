@@ -40,31 +40,47 @@ data:
     #!/bin/bash
     set -eu
 
+    # allow LB to establish IP
     sleep 30
-    # Get CLUSTER_URL
+
     CLUSTER_URL=$(oc get svc kong-kong-cluster -ojsonpath='{.status.loadBalancer.ingress[].ip}' -n kong)
 
-    # if deploying on GCP ingress address = ip if on AWS ingress address = hostname
-    if [ -z "$CLUSTER_URL" ];
-    then 
-      CLUSTER_URL=$(oc get svc kong-kong-cluster -ojsonpath='{.status.loadBalancer.ingress[].hostname}' -n kong)
-    else 
-      echo "CLUSTER_URL Not NULL";
-    fi
+    # while CLUSTER_URL is null
+    while [ -z "$CLUSTER_URL"]
+    do
+        # gcp
+        CLUSTER_URL=$(oc get svc kong-kong-cluster -ojsonpath='{.status.loadBalancer.ingress[].ip}' -n kong)
 
-    echo $CLUSTER_URL
+        if [ -z "$CLUSTER_URL" ];
+        then 
+            # aws
+            CLUSTER_URL=$(oc get svc kong-kong-cluster -ojsonpath='{.status.loadBalancer.ingress[].hostname}' -n kong)
+        else 
+            echo "CLUSTER_URL Not NULL";
+        fi
+    done
 
-    # Get CLUSTER_TELEMETRY_URL
+
     CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojsonpath='{.status.loadBalancer.ingress[].ip}' -n kong)
 
-    if [ -z "$CLUSTER_TELEMETRY_URL" ];
-    then 
-      CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojsonpath='{.status.loadBalancer.ingress[].hostname}' -n kong)
-    else 
-      echo "CLUSTER_TELEMETRY_URL Not NULL";
-    fi
+    # while CLUSTER_TELEMETRY_URL is null
+    while [ -z "$CLUSTER_TELEMETRY_URL"]
+    do
+        # gcp
+        CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojsonpath='{.status.loadBalancer.ingress[].ip}' -n kong)
 
-    echo $CLUSTER_TELEMETRY_URL
+        if [ -z "$CLUSTER_TELEMETRY_URL" ];
+        then 
+            # aws
+            CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojsonpath='{.status.loadBalancer.ingress[].hostname}' -n kong)
+        else 
+            echo "CLUSTER_TELEMETRY_URL Not NULL";
+        fi
+    done
+
+    echo "ClUSTER_URL $CLUSTER_URL"
+
+    echo "CLUSTER_TELEMETRY_URL $CLUSTER_TELEMETRY_URL"
 
     kubectl create cm cluster-urls -n kong --from-literal=CLUSTER_URL=$CLUSTER_URL --from-literal=CLUSTER_TELEMETRY_URL=$CLUSTER_TELEMETRY_URL
 kind: ConfigMap

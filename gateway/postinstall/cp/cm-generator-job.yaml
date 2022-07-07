@@ -47,7 +47,7 @@ data:
     CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojson | jq -r '.status.loadBalancer.ingress[].hostname')
     echo $CLUSTER_TELEMETRY_URL
 
-    kubectl create cm cluster-urls -n kong --from-literal=CLUSTER_URL=$CLUSTER_URL --from-literal=CLUSTER_TELEMETRY_URL=$CLUSTER_TELEMETRY_URL
+    kubectl create cm cluster-urls -n kong --from-literal=CLUSTER_URL=$(oc get svc kong-kong-cluster -ojson -n kong| jq -r '.status.loadBalancer.ingress[].hostname') --from-literal=CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojson | jq -r '.status.loadBalancer.ingress[].hostname')
 kind: ConfigMap
 metadata:
   creationTimestamp: null

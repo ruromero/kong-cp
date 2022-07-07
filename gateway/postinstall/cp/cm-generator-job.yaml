@@ -39,26 +39,26 @@ data:
     set -eu
 
     # Get CLUSTER_URL
-    CLUSTER_URL=$(oc get svc kong-kong-cluster -ojson -n kong| jq -r '.status.loadBalancer.ingress[].hostname')
+    CLUSTER_URL=$(oc get svc kong-kong-cluster -ojsonpath='{.status.loadBalancer.ingress[].ip}' -n kong)
 
     # if deploying on GCP ingress address = ip if on AWS ingress address = hostname
     if [ -z "$CLUSTER_URL" ];
     then 
-      CLUSTER_URL=$(oc get svc kong-kong-cluster -ojson -n kong| jq -r '.status.loadBalancer.ingress[].ip')
+      CLUSTER_URL=$(oc get svc kong-kong-cluster -ojsonpath='{.status.loadBalancer.ingress[].hostname}' -n kong)
     else 
-      echo "Not NULL";
+      echo "CLUSTER_URL Not NULL";
     fi
 
     echo $CLUSTER_URL
 
     # Get CLUSTER_TELEMETRY_URL
-    CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojson | jq -r '.status.loadBalancer.ingress[].hostname')
+    CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojsonpath='{.status.loadBalancer.ingress[].hostname}' -n kong)
 
     if [ -z "$CLUSTER_URL" ];
     then 
-      CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojson | jq -r '.status.loadBalancer.ingress[].ip')
+      CLUSTER_TELEMETRY_URL=$(oc get svc kong-kong-clustertelemetry -n kong -ojsonpath='{.status.loadBalancer.ingress[].ip}' -n kong)
     else 
-      echo "Not NULL";
+      echo "CLUSTER_TELEMETRY_URL Not NULL";
     fi
 
     echo $CLUSTER_TELEMETRY_URL

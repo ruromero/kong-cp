@@ -18,7 +18,7 @@ oc apply -f openshift-gitops/infra/argocd.yaml
 
 ### Get the route and password of argocd gui
 ```bash
-oc get routes -n openshift-gitops redhat-kong-gitops-server --template='{{ .spec.host }}
+oc get routes -n openshift-gitops redhat-kong-gitops-server --template='{{ .spec.host }}'
 ```
 ```bash
 oc get secret -n openshift-gitops redhat-kong-gitops-cluster -ojsonpath='{.data.admin\.password}' | base64 -d
@@ -50,4 +50,7 @@ oc -n bookinfo port-forward svc/productpage 9080:9080
         - [] Enterprise Vault - Retrieving secrets from the vault
     - Iteration 2
         - [] Automation for Setup, initialize and unsealing of vault.
+
+
+
 

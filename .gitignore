@@ -6,4 +6,4 @@ cluster.*
 cp-values.yaml
 Screen*
 openshift-gitops/infra/vault/cluster-keys.json
-.idea
+.idea/

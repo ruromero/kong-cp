@@ -32,53 +32,6 @@ Refer [Vault setup](/openshift-gitops/vault.md) for basic dev setup of vault
 oc apply -f openshift-gitops/overlays/cp/
 ```
 
-- check the admin endpoint is available
-
-```bash
-http `oc get route -n kong kong-kong-admin --template='{{.spec.host}}'` | jq .version
-```
-
-output
-```bash
-"2.8.1.1-enterprise-edition"
-```
-
-- check the `cluster-urls` configmap in kong
-
-```bash
-oc get cm cluster-urls -n kong -oyaml
-```
-
-output
-```bash
-apiVersion: v1
-data:
-  CLUSTER_TELEMETRY_URL: aada71fce488d417b9db340ce87c9b4b-763449203.us-west-1.elb.amazonaws.com
-  CLUSTER_URL: aff89d1140e6b41299f85bd663592c20-1822993472.us-west-1.elb.amazonaws.com
-kind: ConfigMap
-metadata:
-  creationTimestamp: "2022-07-02T12:00:54Z"
-  name: cluster-urls
-  namespace: kong
-  resourceVersion: "4008563"
-  uid: 309e0540-e8e9-470a-b795-b00816206273
-```
-
-- check logs from the `patch-deploy` job
-
-```bash
-oc logs -n kong -l job-name=patch-deploy
-```
-
-output
-```bash
-redhat-kong-gitops-server-openshift-gitops.apps.cwylie-us-west-1b.kni.syseng.devcluster.openshift.com
-Be4OqiXClFN7paoWDIAPZj1tUnfsK06J
-'admin:login' logged in successfully
-Context 'redhat-kong-gitops-server-openshift-gitops.apps.cwylie-us-west-1b.kni.syseng.devcluster.openshift.com' updated
-time="2022-07-02T12:47:20Z" level=info msg="Resource 'kong-kong' patched"
-```
-
 
 - TODO
     - [x] PostInstall for CP
@@ -99,9 +52,3 @@ time="2022-07-02T12:47:20Z" level=info msg="Resource 'kong-kong' patched"
 
 
 
-Quickly remove finalizers from ArgoCD `Applications`
-```
-kubectl get application -n openshift-gitops --no-headers | awk '{ print $1 }' | xargs kubectl patch application --type json -p '[ { "op": "remove", "path": "/metadata/finalizers" } ]'  -n openshift-gitops; k delete application --all -n openshift-gitops;
-
-k delete routes,cm,secret,deploy,svc,sa,po --all -n kong --force; k delete ns kong
-```

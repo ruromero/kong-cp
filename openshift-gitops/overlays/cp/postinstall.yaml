@@ -17,7 +17,7 @@ spec:
       recurse: true
     path: gateway/postinstall/cp
     repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: main # branch
+    targetRevision: structure # branch
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true

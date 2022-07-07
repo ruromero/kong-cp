@@ -16,7 +16,7 @@ spec:
   source:
     path: gateway/prereqs/infra/postgresql
     repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: main
+    targetRevision: structure
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true

@@ -32,13 +32,19 @@ Refer [Vault setup](/openshift-gitops/vault.md) for basic dev setup of vault
 oc apply -f openshift-gitops/overlays/cp/
 ```
 
+### Create the bookinfo app
+```bash
+oc apply -f openshift-gitops/bookinfo/app.yaml
+oc -n bookinfo port-forward svc/productpage 9080:9080
+```
+
 - TODO
     - Iteration 1
         - [] PostInstall for CP
         - [] Data Plane
         - [] kustomize in openshift-gitops/
         - [] Monitoring in data plane
-        - [] Bookinfo app
+        - [X] Bookinfo app
         - [] app of apps (helm chart)
         - [] Enterprise Vault - Retrieving secrets from the vault
     - Iteration 2

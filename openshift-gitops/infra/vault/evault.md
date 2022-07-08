@@ -1,9 +1,10 @@
+# TODO Iteration 2
 - The vault app(Argo) may be borrowed from multi cloud validated pattern project (On-Premise) 
 - Set up the HA vault with consul as backend (consul may be on hosted on a cloud provider) (Cloud Provider)
-- The following set up is for demonstration only
-```
-# Waiting for fix - https://github.com/hashicorp/consul-k8s/pull/1307/files
 
+# The following set up is for demonstration only
+Waiting for fix - https://github.com/hashicorp/consul-k8s/pull/1307/files
+```
 oc adm policy add-scc-to-group privileged system:serviceaccounts:vault
 oc adm policy add-scc-to-group anyuid system:serviceaccounts:vault
 
@@ -11,7 +12,7 @@ helm install consul hashicorp/consul --values openshift-gitops/infra/vault/helm-
 helm install vault hashicorp/vault --values openshift-gitops/infra/vault/helm-vault-values.yml -n vault
 
 kubectl -n vault exec vault-0 -- vault status
-kubectl -n vault exec vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > cluster-keys.json
+kubectl -n vault exec vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > cluster-keys.json # only for demonstration
 
 cat cluster-keys.json | jq -r ".unseal_keys_b64[]"
 VAULT_UNSEAL_KEY=$(cat cluster-keys.json | jq -r ".unseal_keys_b64[]")
@@ -37,7 +38,7 @@ kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 
 vault secrets enable -path=avp -version=2 kv
 
-vault kv put avp/test sample={"license":{"version":1,"signature":"f63b14dc5cc510cc8b97d13565f85839966d2db84a18ea4cafbe8249caf058c5c6ff748dec10e56508f1965df89ef6e846bcf7089a3d6a1d9fefb040b538d6ee","payload":{"customer":"RedHat","license_creation_date":"2022-03-21","product_subscription":"Kong Enterprise Edition","support_plan":"None","admin_seats":"5","dataplanes":"100","license_expiration_date":"2023-03-21","license_key":"0014100001bSiBzAAK_a1V1K0000086R7vUAE"}}}
+vault kv put avp/test sample=<license-key>
 
 cat << EOF > /tmp/policy.hcl 
 path "avp/data/test" { capabilities = ["read"] } 
@@ -54,3 +55,22 @@ helm uninstall consul -n vault
 oc adm policy remove-scc-from-group privileged system:serviceaccounts:vault
 oc adm policy remove-scc-from-group anyuid system:serviceaccounts:vault
 ```
+
+
+# Integration with Argo server
+```
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: redhat-kong-gitops
+  namespace: openshift-gitops
+spec:
+  configManagementPlugins: |-
+    - name: argocd-vault-plugin
+      generate:
+        command: ["argocd-vault-plugin"]
+        args: ["generate", "./"]
+```
+
+# BYOI
+[Dockerfile](../images/vault/Dockerfile)

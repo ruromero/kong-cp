@@ -1,3 +1,5 @@
+# Legacy set up for vault - Depricated
+
 ## Vault Install 
 ```
 helm repo add hashicorp https://helm.releases.hashicorp.com

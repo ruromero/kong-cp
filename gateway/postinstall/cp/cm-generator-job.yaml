@@ -13,8 +13,6 @@ metadata:
   name: cm-generator
 spec:
   template:
-    metadata:
-      creationTimestamp: null
     spec:
       restartPolicy: OnFailure
       serviceAccountName: cm-generator 
@@ -85,7 +83,6 @@ data:
     kubectl create cm cluster-urls -n kong --from-literal=CLUSTER_URL=$CLUSTER_URL --from-literal=CLUSTER_TELEMETRY_URL=$CLUSTER_TELEMETRY_URL
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
   name: cm-generator
   namespace: kong
 ---
@@ -93,7 +90,6 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  creationTimestamp: null
   name: cm-generator
   namespace: kong
 rules:
@@ -121,7 +117,6 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  creationTimestamp: null
   name: cm-generator-binding
   namespace: kong
 roleRef:

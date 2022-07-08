@@ -9,7 +9,6 @@ spec:
   to:
     kind: Service
     name: kong-kong-admin
-    weight: null
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
@@ -22,7 +21,6 @@ spec:
   to:
     kind: Service
     name: kong-kong-manager
-    weight: null
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
@@ -37,7 +35,6 @@ spec:
   to:
     kind: Service
     name: kong-kong-manager
-    weight: null
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
@@ -52,4 +49,3 @@ spec:
   to:
     kind: Service
     name: kong-kong-admin
-    weight: null

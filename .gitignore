@@ -5,5 +5,5 @@ license.json
 cluster.*
 cp-values.yaml
 Screen*
-openshift-gitops/infra/vault/cluster-keys.json
+cluster-keys.json
 .idea/

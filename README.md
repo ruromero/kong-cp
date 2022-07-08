@@ -25,7 +25,7 @@ oc get secret -n openshift-gitops redhat-kong-gitops-cluster -ojsonpath='{.data.
 ```
 
 ### Install the hasicorp vault
-Refer [Vault setup](/openshift-gitops/vault.md) for basic dev setup of vault
+Refer [Vault setup](/openshift-gitops/infra/vault/evault.md) for basic dev setup of vault
 
 ### Create the apps
 ```bash

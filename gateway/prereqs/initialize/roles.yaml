@@ -6,6 +6,39 @@ metadata:
   name: gitops-kong
 rules:
 - apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  - deployments
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  - secrets
+  - services
+  verbs:
+  - create
+  - patch
+# must patch routes for postinstall
+- apiGroups:
+  - route.openshift.io
+  resources:
+  - routes
+  verbs:
+  - patch
+  - create
+- apiGroups:
   - networking.k8s.io
   resources:
   - ingressclasses
@@ -44,10 +77,10 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: admin
+  name: cluster-admin
 subjects:
 - kind: ServiceAccount
-  name: redhat-kong-gitops-argocd-application-controller
+  name: openshift-gitops-argocd-application-controller
   namespace: openshift-gitops
 ---
 kind: Role
@@ -56,13 +89,18 @@ metadata:
   name: access-secrets
   namespace: kong
 rules:
+  # needed to read the cluster.crt and cluster.key
+  - apiGroups:
+    - security.openshift.io
+    resourceNames:
+    - anyuid
+    resources:
+    - securitycontextconstraints
+    verbs:
+    - use
+  # needed to create the secret
   - verbs:
-      - get
-      - list
-      - watch
-      - update
       - create
-      - delete
     apiGroups:
       - ''
     resources:
@@ -81,7 +119,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: access-secrets
-
 # Applying Casey's roles
 ---
 kind: Role

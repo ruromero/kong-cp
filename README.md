@@ -90,7 +90,7 @@ oc -n bookinfo port-forward svc/productpage 9080:9080
         - [] Monitoring in data plane
         - [X] Bookinfo app
         - [] app of apps (helm chart)
-        - [] Enterprise Vault - Retrieving secrets from the vault
+        - [X] Enterprise Vault - Retrieving secrets from the vault
     - Iteration 2
         - [] Automation for Setup, initialize and unsealing of vault.
 

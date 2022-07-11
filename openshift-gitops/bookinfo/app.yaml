@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: bookinfo
+    path: kong-demo-app
     repoURL: https://github.com/mpaulgreen/kong-cp.git
     targetRevision: structure
   syncPolicy:

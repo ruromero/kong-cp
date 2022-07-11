@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prereqs
+  name: dp-prereqs
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "3"
@@ -11,7 +11,7 @@ spec:
   destination:
     namespace: kong
     server: https://api.kongdp.kni.syseng.devcluster.openshift.com:6443
-  project: default
+  project: dataplane
   source:
     directory:
       recurse: true

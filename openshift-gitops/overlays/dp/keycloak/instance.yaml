@@ -12,7 +12,7 @@ spec:
   destination:
     namespace: kong
     server: https://api.kongdp.kni.syseng.devcluster.openshift.com:6443
-  project: default
+  project: dataplane
   source:
     path: gateway/prereqs/infra/keylcloak/instance
     repoURL: https://github.com/mpaulgreen/kong-cp.git

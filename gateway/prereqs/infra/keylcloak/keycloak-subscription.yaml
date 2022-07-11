@@ -2,16 +2,16 @@ apiVersion: operators.coreos.com/v1alpha2
 kind: OperatorGroup
 metadata:
   name: kong-operator-group
-  namespace: kong-keycloak
+  namespace: kong
 spec:
   targetNamespaces:
-    - kong-keycloak
+    - kong
 ---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: keycloak-operator
-  namespace: kong-keycloak
+  namespace: kong
 spec:
   channel: alpha
   installPlanApproval: Automatic

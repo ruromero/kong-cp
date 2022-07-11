@@ -1,23 +1,22 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prereqs
+  name: keycloak
   namespace: openshift-gitops
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "4"
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: kong
-    server: 'https://api.kongdp.kni.syseng.devcluster.openshift.com:6443' # kustomization param
+    server: https://api.kongdp.kni.syseng.devcluster.openshift.com:6443
   project: default
   source:
-    directory:
-      recurse: true
-    path: gateway/prereqs
+    path: gateway/prereqs/infra/keylcloak/instance
     repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: structure # branch
+    targetRevision: structure
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true

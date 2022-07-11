@@ -1,3 +1,4 @@
+# Patch CLUSTER_URL and CLUSTER_TELEMETRY_URL
 kong:
   ingressController:
     enabled: false

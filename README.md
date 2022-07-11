@@ -44,6 +44,11 @@ Refer [Vault setup](/openshift-gitops/infra/vault/evault.md) for basic dev setup
 oc apply -f openshift-gitops/overlays/cp/
 ```
 
+### Deploy data plane
+```bash
+oc apply -f openshift-gitops/overlays/dp/
+```
+
 ## Validate Control Plane deployment
 
 ### Check the admin endpoint is available

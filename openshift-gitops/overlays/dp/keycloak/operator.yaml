@@ -6,14 +6,14 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "3"
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  # - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: kong
+    namespace: keycloak
     server: https://api.kongdp.kni.syseng.devcluster.openshift.com:6443
   project: dataplane
   source:
-    path: gateway/prereqs/infra/keylcloak/operator
+    path: gateway/prereqs/infra/auth/operator
     repoURL: https://github.com/mpaulgreen/kong-cp.git
     targetRevision: structure
   syncPolicy:

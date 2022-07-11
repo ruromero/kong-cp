@@ -10,11 +10,11 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: kong
+    namespace: keycloak
     server: https://api.kongdp.kni.syseng.devcluster.openshift.com:6443
   project: dataplane
   source:
-    path: gateway/prereqs/infra/keylcloak/instance
+    path: gateway/prereqs/infra/auth/instance
     repoURL: https://github.com/mpaulgreen/kong-cp.git
     targetRevision: structure
   syncPolicy:

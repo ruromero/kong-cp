@@ -1,9 +1,4 @@
 # Patch OCP_DOMAIN
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: kong-keycloak
----
 apiVersion: keycloak.org/v1alpha1
 kind: Keycloak
 metadata:

@@ -3,6 +3,10 @@
 - Set up the HA vault with consul as backend (consul may be on hosted on a cloud provider) (Cloud Provider)
 
 # The following set up is for demonstration only
+```
+oc create ns vault
+```
+
 Waiting for fix - https://github.com/hashicorp/consul-k8s/pull/1307/files
 ```
 oc adm policy add-scc-to-group privileged system:serviceaccounts:vault
@@ -25,6 +29,7 @@ cat cluster-keys.json | jq -r ".root_token"
 
 kubectl -n vault exec --stdin=true --tty=true vault-0 -- /bin/sh
 vault login
+exit
 
 kubectl exec vault-0 -n vault -- vault auth enable kubernetes
 

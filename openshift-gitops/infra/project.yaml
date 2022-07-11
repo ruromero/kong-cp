@@ -12,3 +12,18 @@ spec:
     kind: '*'
   sourceRepos:
   - https://github.com/mpaulgreen/kong-cp.git
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: controlplane
+  namespace: openshift-gitops
+spec:
+  destinations:
+  - namespace: '*'
+    server: https://api.kongcp.kni.syseng.devcluster.openshift.com:6443
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  sourceRepos:
+  - https://github.com/mpaulgreen/kong-cp.git

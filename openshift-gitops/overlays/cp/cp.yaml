@@ -12,8 +12,8 @@ metadata:
 spec:
   destination:
     namespace: kong
-    server: https://kubernetes.default.svc
-  project: default
+    server: https://api.kongcp.kni.syseng.devcluster.openshift.com:6443
+  project: controlplane
   source:
     path: gateway/controlplane
     repoURL: https://github.com/mpaulgreen/kong-cp.git

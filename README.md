@@ -24,10 +24,22 @@ oc get routes -n openshift-gitops redhat-kong-gitops-server --template='{{ .spec
 oc get secret -n openshift-gitops redhat-kong-gitops-cluster -ojsonpath='{.data.admin\.password}' | base64 -d
 ```
 
+### Add dataplane cluster
+```bash
+export ARGOCD_SERVER_URL=$(oc get routes -n openshift-gitops | grep redhat-kong-gitops-server | awk '{print $2}')
+argocd login $ARGOCD_SERVER_URL
+argocd cluster add dp
+```
+
+### Create the project for control plane and data plane
+```bash
+oc apply -f openshift-gitops/infra/project.yaml
+```
+
 ### Install the hasicorp vault
 Refer [Vault setup](/openshift-gitops/infra/vault/evault.md) for basic dev setup of vault
 
-### Deploy control plabe
+### Deploy control plane
 ```bash
 oc apply -f openshift-gitops/overlays/cp/
 ```

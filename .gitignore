@@ -7,3 +7,4 @@ cp-values.yaml
 Screen*
 cluster-keys.json
 .idea/
+kong.yaml

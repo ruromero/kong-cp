@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: kong
+    server: https://api.kongdp.kni.syseng.devcluster.openshift.com:6443
+  project: dataplane
+  source:
+    path: gateway/dataplane
+    repoURL: https://github.com/mpaulgreen/kong-cp.git
+    targetRevision: structure
+  syncPolicy:
+    automated: # automatically sync repo changes
+      prune: true
+      selfHeal: true
+      allowEmpty: true

@@ -10,14 +10,14 @@ metadata:
 spec:
   destination:
     namespace: kong
-    server: https://api.kongcp.kni.syseng.devcluster.openshift.com:6443
+    server: https://api.cwylie-us-west-1b.kni.syseng.devcluster.openshift.com:6443
   project: controlplane
   source:
     directory:
       recurse: true
     path: gateway/postinstall/cp
     repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: structure # branch
+    targetRevision: cw-structure # branch
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true

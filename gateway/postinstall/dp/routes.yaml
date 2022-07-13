@@ -1,14 +1,14 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: kong-kong-proxy
-  namespace: kong-dp
+  name: dp-kong-kong-proxy
+  namespace: kong
 spec:
   port:
     targetPort: kong-proxy
   to:
     kind: Service
-    name: kong-kong-proxy
+    name: dp-kong-kong-proxy
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
@@ -18,8 +18,8 @@ metadata:
 spec:
   port:
     targetPort: kong-proxy-tls
-  to:
-    kind: Service
-    name: kong-kong-proxy
   tls:
     termination: passthrough
+  to:
+    kind: Service
+    name: dp-kong-kong-proxy

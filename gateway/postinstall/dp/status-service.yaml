@@ -17,7 +17,7 @@ spec:
     targetPort: 8100
   selector:
     app.kubernetes.io/component: app
-    app.kubernetes.io/instance: kong
+    app.kubernetes.io/instance: dp-kong
     app.kubernetes.io/name: kong
   sessionAffinity: None
   type: ClusterIP

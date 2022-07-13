@@ -8,12 +8,12 @@ metadata:
 spec:
   destination:
     namespace: bookinfo
-    server: https://kubernetes.default.svc
-  project: default
+    server: https://api.mso-test-cwylie.fsi-env2.rhecoeng.com:6443
+  project: dataplane
   source:
     path: kong-demo-app
     repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: structure
+    targetRevision: cw-structure
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true

@@ -112,6 +112,53 @@ oc -n bookinfo port-forward svc/productpage 9080:9080
     - Iteration 2
         - [] Automation for Setup, initialize and unsealing of vault.
 
+## Validate Data Plane deployment
 
+Check the clustering status
+```bash
+http `oc get route -n kong kong-kong-admin --template='{{ .spec.host }}'`/clustering/status
+```
 
+output
+```bash
+HTTP/1.1 200 OK
+access-control-allow-origin: *
+cache-control: private
+content-length: 2
+content-type: application/json; charset=utf-8
+date: Wed, 13 Jul 2022 21:15:38 GMT
+deprecation: true
+server: kong/2.8.1.1-enterprise-edition
+set-cookie: 9da87f6e8821b5f9e46a0f05aee42078=0cc26972bced6fbd36b0fb312aa44651; path=/; HttpOnly
+x-kong-admin-latency: 9
+x-kong-admin-request-id: DQrbDNP3jBIr6aDcxE5GnJrfewL8X5fb
 
+{}
+```
+
+Check Prom Targets (or check in the browser)
+```bash
+curl $(oc get routes -n kong --context dp prometheus-operated --template='{{ .spec.host }}' )/api/v1/targets | jq '.data.activeTargets[] | {health,scrapePool}'
+```
+
+output
+```json
+{
+  "health": "up",
+  "scrapePool": "serviceMonitor/kong/kong-status/0"
+}
+```
+
+Check Grafana
+
+Get password
+```
+echo $(k get secret -n kong --context dp grafana-admin-credentials -ojsonpath='{.data.GF_SECURITY_ADMIN_PASSWORD}' | base64 -d)
+```
+
+Go to grafana route
+```
+grafana-service-kong.apps.mso-test-cwylie.fsi-env2.rhecoeng.com
+```
+
+Login with user `admin` and the password from two steps ago.

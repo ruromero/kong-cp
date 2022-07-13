@@ -10,12 +10,12 @@ metadata:
 spec:
   destination:
     namespace: keycloak
-    server: https://api.kongdp.kni.syseng.devcluster.openshift.com:6443
+    server: https://api.mso-test-cwylie.fsi-env2.rhecoeng.com:6443
   project: dataplane
   source:
     path: gateway/prereqs/infra/auth/operator
     repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: structure
+    targetRevision: cw-structure
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true

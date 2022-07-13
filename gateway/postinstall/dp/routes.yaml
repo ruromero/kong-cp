@@ -23,3 +23,29 @@ spec:
   to:
     kind: Service
     name: dp-kong-kong-proxy
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: grafana-service
+  namespace: kong
+spec:
+  port:
+    targetPort: grafana
+  to:
+    kind: Service
+    name: grafana-service
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    operated-prometheus: "true"
+  name: prometheus-operated
+  namespace: kong
+spec:
+  port:
+    targetPort: web
+  to:
+    kind: Service
+    name: prometheus-operated

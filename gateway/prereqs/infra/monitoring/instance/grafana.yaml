@@ -7,8 +7,9 @@ metadata:
   namespace: kong
 spec:
   config: {}
-  ingress:
-    enabled: true
+  # Route coming up with incorrect path, creating route in postinstall
+  # ingress:
+  #   enabled: true
   dashboardLabelSelector:
   - matchExpressions:
       - { key: app, operator: In, values: [ kong ] }   

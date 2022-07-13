@@ -14,7 +14,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: kong-kong-proxy-tls
-  namespace: kong-dp
+  namespace: kong
 spec:
   port:
     targetPort: kong-proxy-tls

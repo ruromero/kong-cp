@@ -138,7 +138,7 @@ x-kong-admin-request-id: DQrbDNP3jBIr6aDcxE5GnJrfewL8X5fb
 
 Check Prom Targets (or check in the browser)
 ```bash
-curl $(oc get routes -n kong --context dp prometheus-operated --template='{{ .spec.host }}' )/api/v1/targets | jq '.data.activeTargets[] | {health,scrapePool}'
+curl $(oc get routes -n kong --context dp prometheus-service --template='{{ .spec.host }}' )/api/v1/targets | jq '.data.activeTargets[] | {health,scrapePool}'
 ```
 
 output
@@ -153,12 +153,54 @@ Check Grafana
 
 Get password
 ```
-echo $(k get secret -n kong --context dp grafana-admin-credentials -ojsonpath='{.data.GF_SECURITY_ADMIN_PASSWORD}' | base64 -d)
+oc get secret -n kong --context dp grafana-admin-credentials  --template='{{ .data.GF_SECURITY_ADMIN_PASSWORD }}' | base64 -d
 ```
 
-Go to grafana route
-```
-grafana-service-kong.apps.mso-test-cwylie.fsi-env2.rhecoeng.com
+Go to grafana route (takes a while to come up sometimes)
+```bash
+oc get route -n kong --context dp grafana-service --template='{{ .spec.host }}'
 ```
 
 Login with user `admin` and the password from two steps ago.
+
+Check patch results:
+
+Check ingress host
+```bash
+oc get ing demo-app-ingress -n bookinfo --context dp -ojsonpath='{ .spec.rules[0].host }'
+```
+
+output
+```bash
+demo-app-kong.api.mso-test-cwylie.fsi-env2.rhecoeng.com
+```
+
+Check the KeycloakClient redirectUri
+```bash
+oc get keycloakclient kuma-demo-client -n keycloak --context dp -ojsonpath='{ .spec.client.redirectUris[0] }'
+```
+
+output
+```bash
+http://demo-app-kong.api.mso-test-cwylie.fsi-env2.rhecoeng.com/*
+```
+
+Check the KeycloakClient rootUrl
+```bash
+oc get keycloakclient kuma-demo-client -n keycloak --context dp -ojsonpath='{ .spec.client.rootUrl }'
+```
+
+output
+```bash
+http://demo-app-kong.api.mso-test-cwylie.fsi-env2.rhecoeng.com
+```
+
+Check the KongPlugin:
+```bash
+oc get kongplugin keycloak-auth-plugin -n bookinfo --context dp --template='{{ .config.issuer }}'
+```
+
+output
+```
+https://keycloak-keycloak.com/auth/realms/kong
+```

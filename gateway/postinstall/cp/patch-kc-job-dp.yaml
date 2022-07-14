@@ -1,0 +1,117 @@
+# ATTN - this must be run from the CP in order to login to argcd
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: kong
+  name: patch-kc
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+  namespace: kong
+  name: patch-kc
+spec:
+  backoffLimit: 9
+  completions: 1
+  template:
+    spec:
+      restartPolicy: OnFailure
+      serviceAccountName: patch-kc
+      volumes:
+      - name: patch-kc
+        configMap:
+          name: patch-kc
+          defaultMode: 0711 
+      containers:
+      - image: cmwylie19/kube-argo-base
+        name: kube-argo-base
+        resources: {}
+        volumeMounts:
+        - name: patch-kc
+          mountPath: /opt/scripts
+        securityContext:
+           runAsUser: 0
+        command: ["sh","-c","/opt/scripts/patch-kc.sh"]
+---
+apiVersion: v1
+data:
+  patch-kc.sh: |
+    #!/bin/bash
+    set -eu
+
+    # wait on DP manifests
+    sleep 30
+
+    # Get Server
+    SERVER=$(oc get routes -n openshift-gitops redhat-kong-gitops-server -otemplate='{{ .spec.host }}')
+
+    echo $SERVER
+
+    # Get Password
+    PASSWORD=$(oc get secret -n openshift-gitops redhat-kong-gitops-cluster -ojsonpath='{.data.admin\.password}' | base64 -d)
+    echo $PASSWORD
+
+
+    # Login Argo
+    argocd login --username admin --password $PASSWORD $SERVER --insecure
+
+    # Patch Ingress
+    argocd app patch-resource dp-postinstall --kind Ingress --resource-name demo-app-ingress --namespace=bookinfo --patch "{\"spec\":{\"rules\":[{\"host\":\"demo-app-kong.$(oc get appprojects -n openshift-gitops dataplane -ojsonpath='{.spec.destinations[0].server}' | sed  's/https:\/\///g' | sed 's/:6443//g')\",\"http\":{\"paths\":[{\"path\":\"/\",\"pathType\":\"Prefix\",\"backend\":{\"service\":{\"name\":\"frontend\",\"port\":{\"number\":9080}}}}]}}]}}" --patch-type 'application/strategic-merge-patch+json'
+
+    # Patch KeycloakClient (rootUrl, redirectUris)
+    argocd app patch-resource dp-postinstall --kind KeycloakClient --resource-name kuma-demo-client --namespace=keycloak --patch "{\"spec\":{\"client\":{\"rootUrl\": \"http://demo-app-kong.$(oc get appprojects -n openshift-gitops dataplane -ojsonpath='{.spec.destinations[0].server}' | sed  's/https:\/\///g' | sed 's/:6443//g')\",\"redirectUris\":[\"http://demo-app-kong.$(oc get appprojects -n openshift-gitops dataplane -ojsonpath='{.spec.destinations[0].server}' | sed  's/https:\/\///g' | sed 's/:6443//g')/*\"]}}}" --patch-type 'application/merge-patch+json'   
+
+    # Patch Keycloak Plugin
+    argocd app patch-resource dp-postinstall --kind KongPlugin --resource-name keycloak-auth-plugin --namespace=bookinfo --patch "{\"config\":{\"issuer\": \"https://keycloak-keycloak.$(oc get appprojects -n openshift-gitops dataplane -ojsonpath='{.spec.destinations[0].server}' | sed  's/https:\/\///g' | sed 's/:6443//g')/auth/realms/kong\"}}" --patch-type 'application/merge-patch+json' 
+kind: ConfigMap
+metadata:
+  namespace: kong
+  name: patch-kc
+---
+# sa needs to get secrets, routes, in kong and openshift-gitops namespaces
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: patch-kc
+rules:
+- apiGroups:
+  - security.openshift.io
+  resourceNames:
+  - anyuid
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - use
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+- apiGroups:
+  - route.openshift.io
+  resources:
+  - routes
+  verbs:
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - appprojects
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: patch-kc-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: patch-kc
+subjects:
+- kind: ServiceAccount
+  name: patch-kc
+  namespace: kong

@@ -1,7 +1,7 @@
 # Patch CLUSTER_URL and CLUSTER_TELEMETRY_URL
 kong:
   ingressController:
-    enabled: true
+    enabled: false
   image:
     repository: kong/kong-gateway
     tag: 2.8

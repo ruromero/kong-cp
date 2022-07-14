@@ -1,0 +1,33 @@
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakClient
+metadata:
+  name: kuma-demo-client
+  namespace: keycloak
+  labels:
+    app: kong-demo
+spec:
+  client:
+    enabled: true
+    clientAuthenticatorType: client-secret
+    redirectUris:
+      - 'http://demo-app-kong.com/*'
+    clientId: kuma-demo-client
+    name: kuma-demo-client
+    rootUrl: 'http://demo-app-kong.com/'
+    implicitFlowEnabled: false
+    secret: client-secret
+    publicClient: false
+    standardFlowEnabled: true
+    directAccessGrantsEnabled: true
+    protocolMappers:
+      - protocol: openid-connect
+        protocolMapper: oidc-usermodel-realm-role-mapper
+        name: realm roles
+        config:
+          access.token.claim: "true"
+          multivalued: "true"
+          jsonType.label: String
+          claim.name: roles
+  realmSelector:
+    matchLabels:
+      app: kong-demo

@@ -8,6 +8,19 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
+  ignoreDifferences:
+  - group: "networking.k8s.io"
+    kind: "Ingress"
+    jsonPointers:
+    - /spec/rules/0/host
+  - group: "keycloak.org"
+    kind: "KeycloakClient"
+    jsonPointers:
+    - /spec/client/redirectUris/0
+  - group: "keycloak.org"
+    kind: "KeycloakClient"
+    jsonPointers:
+    - /spec/client/rootUrl
   destination:
     namespace: kong
     server: https://api.mso-test-cwylie.fsi-env2.rhecoeng.com:6443
@@ -18,7 +31,8 @@ spec:
     path: gateway/postinstall/dp
     repoURL: https://github.com/mpaulgreen/kong-cp.git
     targetRevision: cw-structure # branch
-  # syncPolicy:
-  #   automated: # automatically sync repo changes
-  #     prune: true
-  #     selfHeal: true
+  syncPolicy:
+    syncOptions:
+    - RespectIgnoreDifferences=true
+    automated: # automatically sync repo changes
+      selfHeal: true

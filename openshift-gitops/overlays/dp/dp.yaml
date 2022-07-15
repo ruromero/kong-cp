@@ -9,6 +9,12 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
+  ignoreDifferences:
+  - group: "apps"
+    kind: "Deployment"
+    jsonPointers:
+    - /spec/containers/0/env/KONG_CLUSTER_CONTROL_PLANE
+    - /spec/containers/0/env/KONG_CLUSTER_TELEMETRY_ENDPOINT
   destination:
     namespace: kong
     server: https://api.mso-test-cwylie.fsi-env2.rhecoeng.com:6443
@@ -17,4 +23,8 @@ spec:
     path: gateway/dataplane
     repoURL: https://github.com/mpaulgreen/kong-cp.git
     targetRevision: cw-structure
-  syncPolicy: {}
+  syncPolicy:
+    syncOptions:
+    - RespectIgnoreDifferences=true
+    automated: # automatically sync repo changes
+      selfHeal: true

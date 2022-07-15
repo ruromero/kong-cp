@@ -37,7 +37,7 @@ data:
     #!/bin/bash
     set -eu
 
-    sleep 30
+    sleep 60
     # Get Server
     SERVER=$(oc get routes -n openshift-gitops redhat-kong-gitops-server -otemplate='{{ .spec.host }}')
 

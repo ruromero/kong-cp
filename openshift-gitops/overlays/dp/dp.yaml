@@ -17,8 +17,4 @@ spec:
     path: gateway/dataplane
     repoURL: https://github.com/mpaulgreen/kong-cp.git
     targetRevision: cw-structure
-  syncPolicy:
-    automated: # automatically sync repo changes
-      prune: true
-      selfHeal: true
-      allowEmpty: true
+  syncPolicy: {}

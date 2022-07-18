@@ -27,4 +27,7 @@ spec:
   syncPolicy:
     syncOptions:
     - RespectIgnoreDifferences=true
-    automated: {} # changes that are made to the live cluster will not trigger automated sync.
+    automated:  # changes that are made to the live cluster will not trigger automated sync.
+      prune: true
+      selfHeal: false
+      allowEmpty: true

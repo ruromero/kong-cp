@@ -7,7 +7,7 @@ metadata:
 spec:
   destinations:
   - namespace: '*'
-    server: https://api.mso-test-cwylie.fsi-env2.rhecoeng.com:6443
+    server: https://api.kong-dp-cw.fsi-env2.rhecoeng.com:6443
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
@@ -22,7 +22,7 @@ metadata:
 spec:
   destinations:
   - namespace: '*'
-    server: https://api.cwylie-us-west-1b.kni.syseng.devcluster.openshift.com:6443 
+    server: https://api.kong-cp-cw.kni.syseng.devcluster.openshift.com:6443
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'

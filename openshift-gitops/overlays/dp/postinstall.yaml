@@ -23,7 +23,7 @@ spec:
     - /spec/client/rootUrl
   destination:
     namespace: kong
-    server: https://api.mso-test-cwylie.fsi-env2.rhecoeng.com:6443
+    server: https://api.kong-dp-cw.fsi-env2.rhecoeng.com:6443
   project: dataplane
   source:
     directory:

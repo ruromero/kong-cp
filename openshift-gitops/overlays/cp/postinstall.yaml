@@ -10,7 +10,7 @@ metadata:
 spec:
   destination:
     namespace: kong
-    server: https://api.cwylie-us-west-1b.kni.syseng.devcluster.openshift.com:6443
+    server: https://api.kong-cp-cw.kni.syseng.devcluster.openshift.com:6443
   project: controlplane
   source:
     directory:

@@ -124,16 +124,23 @@ output
 HTTP/1.1 200 OK
 access-control-allow-origin: *
 cache-control: private
-content-length: 2
+content-length: 175
 content-type: application/json; charset=utf-8
-date: Wed, 13 Jul 2022 21:15:38 GMT
+date: Mon, 18 Jul 2022 15:30:07 GMT
 deprecation: true
-server: kong/2.8.1.1-enterprise-edition
-set-cookie: 9da87f6e8821b5f9e46a0f05aee42078=0cc26972bced6fbd36b0fb312aa44651; path=/; HttpOnly
-x-kong-admin-latency: 9
-x-kong-admin-request-id: DQrbDNP3jBIr6aDcxE5GnJrfewL8X5fb
+server: kong/2.8.1.2-enterprise-edition
+set-cookie: 9da87f6e8821b5f9e46a0f05aee42078=082c0cbf528d297552d34bc8de2449a7; path=/; HttpOnly
+x-kong-admin-latency: 2
+x-kong-admin-request-id: JGH47yvTjSKKKleJK8t2O3rNazap8hRf
 
-{}
+{
+    "13177460-d7b5-4513-8d92-3dcb93789c6d": {
+        "config_hash": "237049a63303961f82b7d787d3539cb6",
+        "hostname": "dp-kong-kong-8455cbfcfd-fr5n8",
+        "ip": "10.132.0.1",
+        "last_seen": 1658158203
+    }
+}
 ```
 
 Check Prom Targets (or check in the browser)

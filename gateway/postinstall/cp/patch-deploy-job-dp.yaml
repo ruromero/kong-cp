@@ -10,6 +10,8 @@ kind: Job
 metadata:
   namespace: kong
   name: patch-deploy-dp
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   template:
     spec:
@@ -37,7 +39,7 @@ data:
     #!/bin/bash
     set -eu
 
-    sleep 60
+    sleep 90
     # Get Server
     SERVER=$(oc get routes -n openshift-gitops redhat-kong-gitops-server -otemplate='{{ .spec.host }}')
 

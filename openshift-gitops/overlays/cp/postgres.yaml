@@ -11,12 +11,12 @@ metadata:
 spec:
   destination:
     namespace: kong
-    server: https://api.kongcp.kni.syseng.devcluster.openshift.com:6443
+    name: in-cluster
   project: controlplane
   source:
     path: gateway/prereqs/infra/postgresql
-    repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: structure
+    repoURL: https://github.com/ruromero/kong-cp.git
+    targetRevision: namespaces
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true

@@ -20,14 +20,17 @@ oc apply -f openshift-gitops/infra/argocd.yaml
 ```bash
 oc get routes -n openshift-gitops redhat-kong-gitops-server --template='{{ .spec.host }}'
 ```
+
+You can login using your OpenShift credentials or the admin user with the generated password.
+
 ```bash
 oc get secret -n openshift-gitops redhat-kong-gitops-cluster -ojsonpath='{.data.admin\.password}' | base64 -d
 ```
 
 ### Add dataplane cluster
 ```bash
-export ARGOCD_SERVER_URL=$(oc get routes -n openshift-gitops | grep redhat-kong-gitops-server | awk '{print $2}')
-argocd login $ARGOCD_SERVER_URL
+export ARGOCD_SERVER_URL=$(oc get routes -n openshift-gitops redhat-kong-gitops-server --template='{{ .spec.host }}')
+argocd login --insecure --username=admin --password=$(oc get secret -n openshift-gitops redhat-kong-gitops-cluster -ojsonpath='{.data.admin\.password}' | base64 -d) $ARGOCD_SERVER_URL
 argocd cluster add dp
 argocd cluster add cp
 ```

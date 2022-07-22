@@ -10,14 +10,14 @@ metadata:
 spec:
   destination:
     namespace: kong
-    server: https://api.kongcp.kni.syseng.devcluster.openshift.com:6443
+    name: in-cluster
   project: controlplane
   source:
     directory:
       recurse: true
     path: gateway/prereqs/initialize
-    repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: structure # branch
+    repoURL: https://github.com/ruromero/kong-cp.git
+    targetRevision: namespaces # branch
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true

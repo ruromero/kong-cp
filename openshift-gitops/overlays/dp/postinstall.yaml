@@ -9,15 +9,15 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: kong
-    server: https://api.kongdp.kni.syseng.devcluster.openshift.com:6443
+    namespace: kong-dp
+    name: in-cluster
   project: dataplane
   source:
     directory:
       recurse: true
     path: gateway/postinstall/dp
-    repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: structure # branch
+    repoURL: https://github.com/ruromero/kong-cp.git
+    targetRevision: namespaces # branch
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true

@@ -12,8 +12,8 @@ spec:
   project: default
   source:
     path: kong-demo-app
-    repoURL: https://github.com/mpaulgreen/kong-cp.git
-    targetRevision: structure
+    repoURL: https://github.com/ruromero/kong-cp.git
+    targetRevision: namespaces
   syncPolicy:
     automated: # automatically sync repo changes
       prune: true
